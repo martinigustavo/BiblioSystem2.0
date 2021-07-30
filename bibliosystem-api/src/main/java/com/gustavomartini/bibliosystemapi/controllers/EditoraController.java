@@ -1,26 +1,47 @@
 package com.gustavomartini.bibliosystemapi.controllers;
 
-import com.gustavomartini.bibliosystemapi.models.Autor;
-import com.gustavomartini.bibliosystemapi.models.Editora;
-import com.gustavomartini.bibliosystemapi.repository.AutorRepository;
+import com.gustavomartini.bibliosystemapi.models.EditoraModel;
 import com.gustavomartini.bibliosystemapi.repository.EditoraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/editoras")
+@RequestMapping("/api/editoras")
 public class EditoraController {
 
     @Autowired
     private EditoraRepository editoraRepository;
 
     @GetMapping
-    public List<Editora> listAll() {
-        return editoraRepository.findAll();
+    public ResponseEntity<List<EditoraModel>> listAll() {
+        List<EditoraModel> editorasList = editoraRepository.findAll();
+
+        if (editorasList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<List<EditoraModel>>(editorasList, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EditoraModel> getEditoraById(@PathVariable(value = "id") Integer id) {
+        Optional<EditoraModel> editora0 = editoraRepository.findById(id);
+
+        if (!editora0.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<EditoraModel>(editora0.get(), HttpStatus.OK);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<EditoraModel> saveEditora(@RequestBody EditoraModel editora) {
+        return new ResponseEntity<EditoraModel>(editoraRepository.save(editora), HttpStatus.CREATED);
     }
 }
 

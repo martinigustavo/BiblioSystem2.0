@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Autor {
+@Table(name = "autor")
+public class AutorModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +19,16 @@ public class Autor {
 
     @Column(name = "situacao", nullable = false)
     private String situacao;
+
+    public AutorModel() {
+    }
+
+    public AutorModel(Integer cod_autor, String nome, String sobrenome, String situacao) {
+        this.cod_autor = cod_autor;
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.situacao = situacao;
+    }
 
     public Integer getCod_autor() {
         return cod_autor;
@@ -55,7 +66,7 @@ public class Autor {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Autor autor = (Autor) o;
+        AutorModel autor = (AutorModel) o;
         return Objects.equals(cod_autor, autor.cod_autor) && Objects.equals(nome, autor.nome) && Objects.equals(sobrenome, autor.sobrenome) && Objects.equals(situacao, autor.situacao);
     }
 

@@ -1,30 +1,36 @@
 package com.gustavomartini.bibliosystemapi.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class Editora {
+@Table(name = "editora")
+public class EditoraModel {
 
     @Id
-    private Integer cod_autor;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer cod_editora;
 
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Column(name = "sobrenome", nullable = false)
-    private String sobrenome;
-
     @Column(name = "situacao", nullable = false)
     private String situacao;
 
-    public Integer getCod_autor() {
-        return cod_autor;
+    public EditoraModel() {
     }
 
-    public void setCod_autor(Integer cod_autor) {
-        this.cod_autor = cod_autor;
+    public EditoraModel(Integer cod_editora, String nome, String situacao) {
+        this.cod_editora = cod_editora;
+        this.nome = nome;
+        this.situacao = situacao;
+    }
+
+    public Integer getCod_editora() {
+        return cod_editora;
+    }
+
+    public void setCod_editora(Integer cod_editora) {
+        this.cod_editora = cod_editora;
     }
 
     public String getNome() {
@@ -33,14 +39,6 @@ public class Editora {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getSobrenome() {
-        return sobrenome;
-    }
-
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
     }
 
     public String getSituacao() {
